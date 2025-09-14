@@ -28,7 +28,7 @@ install(
     LIBRARY DESTINATION ${PKG_NAME}/lib
 )
 install(
-    DIRECTORY ${TOP}/include/xlib
+    DIRECTORY ${TOP}/include/${PROJECT_NAME}
     DESTINATION ${PKG_NAME}/include
     FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
 )
