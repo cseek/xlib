@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 15:17:48
+ * @LastEditTime: 2025-09-18 18:33:57
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@
 #include <iostream>
 
 void show_shape(XlibInterface *interface, XlibShapeType type) {
-    XlibHandle handle = interface->init_shape(
+    XlibHandle *handle = interface->init_shape(
         type,
         [](const char *content) {
             std::cout << content << std::endl;
@@ -30,7 +30,7 @@ void show_shape(XlibInterface *interface, XlibShapeType type) {
         std::cerr << "Failed to init shape, ret: " << std::endl;
         return;
     }
-    if (XLIB_RETCODE_OK != interface->show_shape(&handle)) {
+    if (XLIB_RETCODE_OK != interface->show_shape(handle)) {
         std::cerr << "Failed to show shape" << std::endl;
         return;
     }

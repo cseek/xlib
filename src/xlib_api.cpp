@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 15:18:53
+ * @LastEditTime: 2025-09-18 18:32:33
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,16 +36,16 @@ static void print_version_info() {
     std::cout << "─────────────────────────────" << std::endl;
 }
 
-static auto init_shape(XlibShapeType type, ContentCallback *ccbk) -> XlibHandle {
-    return static_cast<XlibHandle>(new Aurson::Painter(type, ccbk));
+static auto init_shape(XlibShapeType type, ContentCallback *ccbk) -> XlibHandle * {
+    return static_cast<XlibHandle *>(new Aurson::Painter(type, ccbk));
 }
 
 static auto show_shape(XlibHandle *handle) -> XlibRetcode {
-    CHECK_TRUE(handle && *handle, XLIB_RETCODE_HANDLE_INVALID);
-    return static_cast<Aurson::Painter *>(*handle)->paint();
+    CHECK_TRUE(handle, XLIB_RETCODE_HANDLE_INVALID);
+    return static_cast<Aurson::Painter *>(handle)->paint();
 }
 
-static auto deinit_shape(XlibHandle *handle) -> XlibRetcode {
+static auto deinit_shape(XlibHandle **handle) -> XlibRetcode {
     CHECK_TRUE(handle && *handle, XLIB_RETCODE_HANDLE_INVALID);
     delete static_cast<Aurson::Painter *>(*handle);
     *handle = nullptr;
