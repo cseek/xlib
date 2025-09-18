@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 15:18:45
+ * @LastEditTime: 2025-09-18 16:31:22
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,12 +19,14 @@
  */
 #ifndef __XLIB_API_H__
 #define __XLIB_API_H__
+
+#include "common.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
-#include "common.h"
 
-XLIB_API auto get_xlib_interface() -> XlibInterface *;
+XLIB_API XlibInterface * get_xlib_interface();
 XLIB_API void drop_xlib_interface(XlibInterface **interface);
 
 #ifdef __cplusplus
