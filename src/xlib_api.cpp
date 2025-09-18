@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 18:32:33
+ * @LastEditTime: 2025-09-18 19:09:09
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,10 +45,9 @@ static auto show_shape(XlibHandle *handle) -> XlibRetcode {
     return static_cast<Aurson::Painter *>(handle)->paint();
 }
 
-static auto deinit_shape(XlibHandle **handle) -> XlibRetcode {
-    CHECK_TRUE(handle && *handle, XLIB_RETCODE_HANDLE_INVALID);
-    delete static_cast<Aurson::Painter *>(*handle);
-    *handle = nullptr;
+static auto deinit_shape(XlibHandle *handle) -> XlibRetcode {
+    CHECK_TRUE(handle, XLIB_RETCODE_HANDLE_INVALID);
+    delete static_cast<Aurson::Painter *>(handle);
     return XLIB_RETCODE_OK;
 }
 
@@ -63,9 +62,8 @@ XLIB_API auto get_xlib_interface() -> XlibInterface * {
     // clang-format on
 }
 
-XLIB_API void drop_xlib_interface(XlibInterface **interface) {
-    if (interface && *interface) {
-        delete *interface;
-        *interface = nullptr;
+XLIB_API void drop_xlib_interface(XlibInterface *interface) {
+    if (interface) {
+        delete interface;
     }
 }

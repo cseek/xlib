@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 18:33:57
+ * @LastEditTime: 2025-09-18 19:10:42
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +34,8 @@ void show_shape(XlibInterface *interface, XlibShapeType type) {
         std::cerr << "Failed to show shape" << std::endl;
         return;
     }
-    interface->deinit_shape(&handle);
+    interface->deinit_shape(handle);
+    handle = NULL;
 }
 
 int main() {
@@ -50,7 +51,8 @@ int main() {
     show_shape(interface, XLIB_RECTANGLE);
     show_shape(interface, XLIB_CIRCLE);
 
-    drop_xlib_interface(&interface);
+    drop_xlib_interface(interface);
+    interface = NULL;
 
     return 0;
 }

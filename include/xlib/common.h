@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 18:31:51
+ * @LastEditTime: 2025-09-18 19:09:01
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,6 +48,6 @@ typedef enum {
 typedef struct {
     XlibHandle *(*init_shape)(XlibShapeType type, ContentCallback *ccbk);
     XlibRetcode (*show_shape)(XlibHandle *handle);
-    XlibRetcode (*deinit_shape)(XlibHandle **handle);
+    XlibRetcode (*deinit_shape)(XlibHandle *handle);
 } XlibInterface;
 #endif // __COMMON_H__
