@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-12 19:19:25
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 14:14:00
+ * @LastEditTime: 2025-09-18 15:12:32
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  */
@@ -19,7 +19,7 @@ void show_shape(XlibInterface *interface, XlibShapeType type) {
         std::cerr << "Failed to init shape, ret: " << std::endl;
         return;
     }
-    if (XLIB_RTCODE_OK != interface->show_shape(&handle)) {
+    if (XLIB_RETCODE_OK != interface->show_shape(&handle)) {
         std::cerr << "Failed to show shape" << std::endl;
         return;
     }

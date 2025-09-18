@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 15:26:03
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 14:17:16
+ * @LastEditTime: 2025-09-18 15:06:08
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  */
@@ -20,10 +20,11 @@ typedef void *XlibHandle;
 typedef void(ContentCallback)(const char *content);
 
 typedef enum {
-    XLIB_RTCODE_OK = 0,
-    XLIB_RTCODE_FAIL = -1,
-    XLIB_RTCODE_HANDLE_INVALID = -2,
-    XLIB_RTCODE_SHAPE_INVALID = -3
+    XLIB_RETCODE_OK = 0,
+    XLIB_RETCODE_FAIL = -1,
+    XLIB_RETCODE_HANDLE_INVALID = -2,
+    XLIB_RETCODE_SHAPE_INVALID = -3,
+    XLIB_RETCODE_CALLBACK_INVALID = -4
 } XlibRetcode;
 
 typedef enum {

@@ -2,18 +2,13 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 15:26:03
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 14:12:32
+ * @LastEditTime: 2025-09-18 15:11:22
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  */
 #include "xlib/xlib_api.h"
-#include "core/circle.h"
-#include "core/context.h"
-#include "core/line.h"
 #include "core/macros.h"
-#include "core/point.h"
-#include "core/rectangle.h"
-#include "core/triangle.h"
+#include "core/painter.h"
 #include "xlib/common.h"
 #include <iostream>
 
@@ -30,64 +25,20 @@ static void print_version_info() {
     std::cout << "─────────────────────────────" << std::endl;
 }
 
-static void create_shape(Aurson::Context *context) {
-    switch (context->shape_type) {
-    case XlibShapeType::XLIB_POINT:
-        context->shape = new Aurson::Point();
-        break;
-
-    case XlibShapeType::XLIB_LINE:
-        context->shape = new Aurson::Line();
-        break;
-
-    case XlibShapeType::XLIB_TRIANGLE:
-        context->shape = new Aurson::Triangle();
-        break;
-
-    case XlibShapeType::XLIB_RECTANGLE:
-        context->shape = new Aurson::Rectangle();
-        break;
-
-    case XlibShapeType::XLIB_CIRCLE:
-        context->shape = new Aurson::Circle();
-        break;
-
-    default:
-        context->shape = nullptr;
-        break;
-    }
-}
-
 static auto init_shape(XlibShapeType type, ContentCallback *ccbk) -> XlibHandle {
-    auto context = new Aurson::Context();
-    if (!context) {
-        return nullptr;
-    }
-    context->shape_type = type;
-    context->ccbk = ccbk;
-    create_shape(context);
-
-    return static_cast<XlibHandle>(context);
+    return static_cast<XlibHandle>(new Aurson::Painter(type, ccbk));
 }
 
 static auto show_shape(XlibHandle *handle) -> XlibRetcode {
-    auto context = static_cast<Aurson::Context *>(*handle);
-    CHECK_TRUE(context, XLIB_RTCODE_HANDLE_INVALID);
-    CHECK_TRUE(context->shape, XLIB_RTCODE_SHAPE_INVALID);
-    if (context->ccbk) {
-        context->ccbk(context->shape->draw().c_str());
-        return XlibRetcode::XLIB_RTCODE_OK;
-    }
-    return XlibRetcode::XLIB_RTCODE_FAIL;
+    CHECK_TRUE(handle && *handle, XLIB_RETCODE_HANDLE_INVALID);
+    return static_cast<Aurson::Painter *>(*handle)->paint();
 }
 
 static auto deinit_shape(XlibHandle *handle) -> XlibRetcode {
-    if (*handle) {
-        delete static_cast<Aurson::Context *>(*handle);
-        *handle = nullptr;
-    }
-
-    return XLIB_RTCODE_OK;
+    CHECK_TRUE(handle && *handle, XLIB_RETCODE_HANDLE_INVALID);
+    delete static_cast<Aurson::Painter *>(*handle);
+    *handle = nullptr;
+    return XLIB_RETCODE_OK;
 }
 
 XLIB_API auto get_xlib_interface() -> XlibInterface * {
@@ -102,7 +53,7 @@ XLIB_API auto get_xlib_interface() -> XlibInterface * {
 }
 
 XLIB_API void drop_xlib_interface(XlibInterface **interface) {
-    if (*interface) {
+    if (interface && *interface) {
         delete *interface;
         *interface = nullptr;
     }
