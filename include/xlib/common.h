@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 15:26:03
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-14 18:07:18
+ * @LastEditTime: 2025-09-18 14:17:16
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  */
@@ -16,14 +16,14 @@
 
 #define XLIB_API __attribute__((visibility("default")))
 
-typedef void XlibHandle;
+typedef void *XlibHandle;
 typedef void(ContentCallback)(const char *content);
 
 typedef enum {
     XLIB_RTCODE_OK = 0,
-    XLIB_RTCODE_FAIL,
-    XLIB_RTCODE_HANDLE_INVALID,
-    XLIB_RTCODE_SHAPE_INVALID
+    XLIB_RTCODE_FAIL = -1,
+    XLIB_RTCODE_HANDLE_INVALID = -2,
+    XLIB_RTCODE_SHAPE_INVALID = -3
 } XlibRetcode;
 
 typedef enum {
@@ -35,7 +35,7 @@ typedef enum {
 } XlibShapeType;
 
 typedef struct {
-    XlibHandle *(*init_shape)(XlibShapeType type, ContentCallback *ccbk);
+    XlibHandle (*init_shape)(XlibShapeType type, ContentCallback *ccbk);
     XlibRetcode (*show_shape)(XlibHandle *handle);
     XlibRetcode (*deinit_shape)(XlibHandle *handle);
 } XlibInterface;
