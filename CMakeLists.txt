@@ -30,11 +30,16 @@ install(
 install(
     DIRECTORY ${TOP}/include/${PROJECT_NAME}
     DESTINATION ${PKG_NAME}/include
-    FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
+    FILES_MATCHING
+    PATTERN "*.h"
+    PATTERN "core" EXCLUDE
 )
 install(
-    FILES ${TOP}/example/main.c
-    DESTINATION ${PKG_NAME}/example
+    DIRECTORY ${TOP}/example
+    DESTINATION ${PKG_NAME}
+    FILES_MATCHING
+    PATTERN "*.c"
+    PATTERN "*.cpp"
 )
 install(
     TARGETS ${PROJECT_NAME}_unittest

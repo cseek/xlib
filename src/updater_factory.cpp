@@ -17,8 +17,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "core/macros.h"
-#include "core/updater_impl.h"
+#include "xlib/core/macros.h"
+#include "xlib/core/updater_impl.h"
 #include "xlib/updater_factory.h"
 #include "xlib/updater.h"
 #include <iostream>

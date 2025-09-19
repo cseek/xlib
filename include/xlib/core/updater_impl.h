@@ -20,9 +20,9 @@
 #ifndef __UPDATER_IMPL_H__
 #define __UPDATER_IMPL_H__
 
-#include "core/camera.h"
-#include "core/lidar.h"
-#include "core/module.h"
+#include "xlib/core/camera.h"
+#include "xlib/core/lidar.h"
+#include "xlib/core/module.h"
 #include "xlib/updater.h"
 #include <memory>
 
