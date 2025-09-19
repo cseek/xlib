@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 15:18:11
+ * @LastEditTime: 2025-09-19 15:55:57
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,10 +24,8 @@
  * @description: 如果 condition 不满足，则 return_value
  */
 #define CHECK_TRUE(condition, return_value) \
-    do                                      \
-    {                                       \
-        if (!(condition))                   \
-        {                                   \
+    do {                                    \
+        if (!(condition)) {                 \
             return return_value;            \
         }                                   \
     } while (0)

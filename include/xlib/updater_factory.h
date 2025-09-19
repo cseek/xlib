@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 15:18:00
+ * @LastEditTime: 2025-09-19 15:40:19
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,23 +17,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __CIRCLE_H__
-#define __CIRCLE_H__
+#ifndef __UPDATER_FACTORY_H__
+#define __UPDATER_FACTORY_H__
 
-#include "core/shape.h"
+#include "updater.h"
 
-namespace Aurson {
-    class Circle : public Shape {
-    public:
-        ~Circle() override = default;
-        auto draw() -> std::string override {
-            return "     ...     \n"
-                   "   .     .   \n"
-                   "  .       .  \n"
-                   "  .       .  \n"
-                   "   .     .   \n"
-                   "     ...     ";
-        }
-    };
-} // namespace Aurson
-#endif // __CIRCLE_H__
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+XLIB_API Updater *updater_create(ModuleType module_type);
+XLIB_API void updater_destroy(Updater *updater);
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
+#endif // __UPDATER_FACTORY_H__

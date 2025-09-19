@@ -33,7 +33,7 @@ install(
     FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
 )
 install(
-    FILES ${TOP}/example/main.cpp
+    FILES ${TOP}/example/main.c
     DESTINATION ${PKG_NAME}/example
 )
 install(

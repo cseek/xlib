@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 19:09:01
+ * @LastEditTime: 2025-09-19 15:42:08
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,37 +17,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __COMMON_H__
-#define __COMMON_H__
-#ifdef __GNUC__
-#define PACKED __attribute__((packed))
-#else
-#define PACKED
-#endif
+#ifndef __UPDATER_H__
+#define __UPDATER_H__
+
+#include <stdint.h>
+
 #define XLIB_API __attribute__((visibility("default")))
 
-typedef void XlibHandle;
-typedef void(ContentCallback)(const char *content);
+typedef void Private;
+typedef void(ProgressCallback)(float progress);
+typedef struct Updater Updater;
 
 typedef enum {
-    XLIB_RETCODE_OK = 0,
-    XLIB_RETCODE_FAIL = -1,
-    XLIB_RETCODE_HANDLE_INVALID = -2,
-    XLIB_RETCODE_SHAPE_INVALID = -3,
-    XLIB_RETCODE_CALLBACK_INVALID = -4
-} XlibRetcode;
+    OK = 0,               // Success
+    FAIL = -1,            // General failure
+    UPDATER_INVALID = -2, // Invalid Updater instance
+    MODULE_INVALID = -3   // Module invalid
+} RetCode;
 
 typedef enum {
-    XLIB_POINT = 0,
-    XLIB_LINE,
-    XLIB_TRIANGLE,
-    XLIB_RECTANGLE,
-    XLIB_CIRCLE,
-} XlibShapeType;
+    MODULE_TYPE_CAMERA = 0,
+    MODULE_TYPE_LIDAR
+} ModuleType;
 
 typedef struct {
-    XlibHandle *(*init_shape)(XlibShapeType type, ContentCallback *ccbk);
-    XlibRetcode (*show_shape)(XlibHandle *handle);
-    XlibRetcode (*deinit_shape)(XlibHandle *handle);
-} XlibInterface;
-#endif // __COMMON_H__
+    char version[100];
+} ModuleInfo;
+
+struct Updater {
+    RetCode (*init)(Updater *self, ProgressCallback *callback);
+    RetCode (*get_module_info)(Updater *self, ModuleInfo *_module_info);
+    RetCode (*update)(Updater *self, const char *package);
+    RetCode (*deinit)(Updater *self);
+    Private  *private_;
+};
+#endif // __UPDATER_H__

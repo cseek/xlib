@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 15:18:20
+ * @LastEditTime: 2025-09-19 15:55:27
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,18 +17,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __POINT_H__
-#define __POINT_H__
+#include "xlib/updater_factory.h"
+#include <stdio.h>
 
-#include "core/shape.h"
+void progress_callback(float progress) {}
 
-namespace Aurson {
-    class Point : public Shape {
-    public:
-        ~Point() override = default;
-        auto draw() -> std::string override {
-            return ".";
-        }
-    };
-} // namespace Aurson
-#endif // __POINT_H__
+int main() {
+    ModuleInfo info;
+    Updater *updater = NULL;
+
+    updater = updater_create(MODULE_TYPE_CAMERA);
+    updater->init(updater, progress_callback);
+    updater->get_module_info(updater, &info);
+    updater->update(updater, "/tmp/package/example.zip");
+    updater->deinit(updater);
+    updater_destroy(updater);
+    updater = NULL;
+
+    return 0;
+}

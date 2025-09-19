@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 15:18:25
+ * @LastEditTime: 2025-09-19 15:34:09
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,22 +17,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __RECTANGLE_H__
-#define __RECTANGLE_H__
+#ifndef __CAMERA_H__
+#define __CAMERA_H__
 
-#include "core/shape.h"
+#include "module.h"
 
-namespace Aurson {
-    class Rectangle : public Shape {
+namespace Xlib {
+    class Camera : public Module {
     public:
-        ~Rectangle() override = default;
-        auto draw() -> std::string override {
-            return "┌──────────────┐\n"
-                   "│              │\n"
-                   "│              │\n"
-                   "└──────────────┘";
-        }
+        Camera() {}
     };
-} // namespace Aurson
+} // namespace Xlib
 
-#endif // __RECTANGLE_H__
+#endif // __CAMERA_H__

@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 15:18:33
+ * @LastEditTime: 2025-09-19 15:09:21
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,22 +17,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __TRIANGLE_H__
-#define __TRIANGLE_H__
+#ifndef __LIDAR_H__
+#define __LIDAR_H__
 
-#include "core/shape.h"
+#include "module.h"
 
-namespace Aurson {
-    class Triangle : public Shape {
+namespace Xlib {
+    class Lidar : public Module {
     public:
-        ~Triangle() override = default;
-        auto draw() -> std::string override {
-            return "     /\\     \n"
-                   "    /  \\    \n"
-                   "   /    \\   \n"
-                   "  /      \\  \n"
-                   " /________\\ ";
-        }
+        Lidar() {}
     };
-} // namespace Aurson
-#endif // __TRIANGLE_H__
+} // namespace Xlib
+#endif // __LIDAR_H__

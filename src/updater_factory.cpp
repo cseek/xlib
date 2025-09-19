@@ -2,7 +2,7 @@
  * @Author: aurson jassimxiong@gmail.com
  * @Date: 2025-09-14 17:33:37
  * @LastEditors: aurson jassimxiong@gmail.com
- * @LastEditTime: 2025-09-18 19:09:09
+ * @LastEditTime: 2025-09-19 15:54:15
  * @Description:
  * Copyright (c) 2025 by Aurson, All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,10 +17,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "xlib/xlib_api.h"
 #include "core/macros.h"
-#include "core/painter.h"
-#include "xlib/common.h"
+#include "core/updater_impl.h"
+#include "xlib/updater_factory.h"
+#include "xlib/updater.h"
 #include <iostream>
 
 static void print_version_info() {
@@ -36,34 +36,48 @@ static void print_version_info() {
     std::cout << "─────────────────────────────" << std::endl;
 }
 
-static auto init_shape(XlibShapeType type, ContentCallback *ccbk) -> XlibHandle * {
-    return static_cast<XlibHandle *>(new Aurson::Painter(type, ccbk));
+static auto init(Updater *self, ProgressCallback *callback) -> RetCode {
+    CHECK_TRUE(self, UPDATER_INVALID);
+    CHECK_TRUE(self->private_, UPDATER_INVALID);
+    return static_cast<Xlib::UpdaterImpl *>(self->private_)->init(callback);
 }
 
-static auto show_shape(XlibHandle *handle) -> XlibRetcode {
-    CHECK_TRUE(handle, XLIB_RETCODE_HANDLE_INVALID);
-    return static_cast<Aurson::Painter *>(handle)->paint();
+static auto get_module_info(Updater *self, ModuleInfo *_module_info) -> RetCode {
+    CHECK_TRUE(self, UPDATER_INVALID);
+    CHECK_TRUE(self->private_, UPDATER_INVALID);
+    return static_cast<Xlib::UpdaterImpl *>(self->private_)->get_module_info(_module_info);
 }
 
-static auto deinit_shape(XlibHandle *handle) -> XlibRetcode {
-    CHECK_TRUE(handle, XLIB_RETCODE_HANDLE_INVALID);
-    delete static_cast<Aurson::Painter *>(handle);
-    return XLIB_RETCODE_OK;
+static auto update(Updater *self, const char *package) -> RetCode {
+    CHECK_TRUE(self, UPDATER_INVALID);
+    CHECK_TRUE(self->private_, UPDATER_INVALID);
+    return static_cast<Xlib::UpdaterImpl *>(self->private_)->update(package);
 }
 
-XLIB_API auto get_xlib_interface() -> XlibInterface * {
-    print_version_info();
+static auto deinit(Updater *self) -> RetCode {
+    CHECK_TRUE(self, UPDATER_INVALID);
+    CHECK_TRUE(self->private_, UPDATER_INVALID);
+    return static_cast<Xlib::UpdaterImpl *>(self->private_)->deinit();
+}
+
+XLIB_API auto updater_create(ModuleType module_type) -> Updater * {
     // clang-format off
-    return new XlibInterface({
-        .init_shape   = init_shape,
-        .show_shape   = show_shape,
-        .deinit_shape = deinit_shape
+    return new Updater({
+        .init            = init,
+        .get_module_info = get_module_info,
+        .update          = update,
+        .deinit          = deinit,
+        .private_        = new Xlib::UpdaterImpl(module_type)
     });
     // clang-format on
 }
 
-XLIB_API void drop_xlib_interface(XlibInterface *interface) {
-    if (interface) {
-        delete interface;
+XLIB_API void updater_destroy(Updater *updater) {
+    if (!updater) {
+        return;
     }
+    if (updater->private_) {
+        delete static_cast<Xlib::UpdaterImpl *>(updater->private_);
+    }
+    delete updater;
 }

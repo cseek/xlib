@@ -1,7 +1,7 @@
 set(EXE ${PROJECT_NAME})
 add_executable(
     ${EXE}
-    main.cpp
+    main.c
 )
 target_link_libraries(
     ${EXE} PRIVATE 
